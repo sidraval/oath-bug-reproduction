@@ -1,0 +1,5 @@
+<%= form_tag(controller: "sessions", action: "create", method: "post") do |f| %>
+  <%= email_field(:user, :email) %>
+  <%= password_field(:user, :password) %>
+  <%= submit_tag "Login" %>
+<% end %>

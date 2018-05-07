@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Bug reproduction example" do
-  scenario "log in and visit pages" do
+  scenario "Signing in through the form works correctly" do
     visit new_session_path
 
     User.create(email: "foo@example.com", password_digest: "password")
@@ -18,7 +18,7 @@ feature "Bug reproduction example" do
     expect(page).to have_content "This is the index page,"
   end
 
-  scenario "use oath helper to login in and visit pages" do
+  scenario "Using the sign_in oath helper doesn't persist session after link click" do
     user = User.create(email: "foo@example.com", password_digest: "password")
     sign_in(user)
 
@@ -26,18 +26,6 @@ feature "Bug reproduction example" do
     expect(page).to have_content "This page is a secret!"
 
     click_link "Click me"
-
-    expect(page).to have_content "This is the index page,"
-  end
-
-  scenario "use oath helper to login in and visit pages without clicking" do
-    user = User.create(email: "foo@example.com", password_digest: "password")
-    sign_in(user)
-
-    visit new_secret_path
-    expect(page).to have_content "This page is a secret!"
-
-    visit secrets_path
 
     expect(page).to have_content "This is the index page,"
   end
